@@ -1,0 +1,15 @@
+Fotih
+  1.Auth ni tugatish (Tokenlar bilan ishlash) --- 01.07.2025 18:00 // Done!
+  2.CDN --- 02.07.2025 18:00 // Done!
+    1.CDN ni asosiy server modullar ichiga kiritish
+    2.Token larni tekshirish
+    3.Yuklanilayotgan file malumotlarini db save qilish va sorov jonatilmayotgan file larni ochirib tashlash
+  3.FilterByLang va pagination larni to'g'irlash --- 03.07.2025 18:
+
+Muhammadjon
+  1.Bookloop comment lar joyini bitirish --- 01.07.2025 13:00
+  2.CI/CD boyicha ishlash --- 02.07.2025 18:00
+
+Akbar
+  1.Kompaniya websaytini togirlash --- 01.07.2025 18:00 // Done!
+  2.
