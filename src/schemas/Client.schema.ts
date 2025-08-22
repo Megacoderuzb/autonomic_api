@@ -4,23 +4,23 @@ import { timestampsPlugin } from 'src/common/plugins/timestamps.plugin';
 import { AutoIncrement } from 'src/common/plugins/autoIncrement.plugin';
 import { filterPlugin } from 'src/common/plugins/filter.plugin';
 
-export type UserDocument = User & Document;
+export type ClientDocument = Client & Document;
 
 @Schema({
   versionKey: false,
   _id: false,
 })
-export class User {
-  save(): User | PromiseLike<User> {
+export class Client {
+  save(): Client | PromiseLike<Client> {
     throw new Error('Method not implemented.');
   }
   @Prop({ type: Number })
   _id: number;
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: String })
   firstName: string;
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: String })
   lastName: string;
 
   @Prop({ type: Number, required: true })
@@ -39,10 +39,9 @@ export class User {
   deletedAt: number;
 }
 
-const UserSchema = SchemaFactory.createForClass(User);
+const ClientSchema = SchemaFactory.createForClass(Client);
 
-UserSchema.plugin(AutoIncrement, { field: '_id', modelName: 'users' });
-UserSchema.plugin(timestampsPlugin);
-UserSchema.plugin(filterPlugin);
+ClientSchema.plugin(timestampsPlugin);
+ClientSchema.plugin(filterPlugin);
 
-export { UserSchema };
+export { ClientSchema };

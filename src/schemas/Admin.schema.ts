@@ -3,6 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { timestampsPlugin } from 'src/common/plugins/timestamps.plugin';
 import { AutoIncrement } from 'src/common/plugins/autoIncrement.plugin';
 import { filterPlugin } from 'src/common/plugins/filter.plugin';
+import { Role } from 'src/common/enums/role.enum';
 
 export type AdminDocument = Admin & Document;
 
@@ -24,10 +25,16 @@ export class Admin {
   lastName: string;
 
   @Prop({ type: String, required: true })
-  login: string;
+  username: string;
+
+  @Prop({ type: String, required: true })
+  phoneNumber: string;
 
   @Prop({ type: String, required: true })
   password: string;
+
+  @Prop({ type: String, default: Role.ADMIN })
+  role: string;
 
   @Prop({ type: Number, default: Date.now })
   updatedAt: number;
@@ -44,7 +51,6 @@ export class Admin {
 
 const AdminSchema = SchemaFactory.createForClass(Admin);
 
-AdminSchema.plugin(AutoIncrement, { field: '_id', modelName: 'Admins' });
 AdminSchema.plugin(timestampsPlugin);
 AdminSchema.plugin(filterPlugin);
 
