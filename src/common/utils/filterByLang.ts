@@ -14,7 +14,7 @@ const filterByLang: FilterByLang = (items, lang, fieldPaths): Item[] | Item => {
   if (!lang) return items;
 
   const langSuffix = lang.charAt(0).toUpperCase() + lang.slice(1).toLowerCase();
-  const allLangSuffixes = ['Uz', 'Ru', 'En'];
+  const allLangSuffixes = ['Uz', 'Ru'];
 
   const deepClone = (obj: Item): Item =>
     JSON.parse(JSON.stringify(obj)) as Item;

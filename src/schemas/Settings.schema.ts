@@ -1,13 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { AutoIncrement } from 'src/common/plugins/autoIncrement.plugin';
+import { Admin } from './Admin.schema';
 
 export type SettingsDocument = Settings & Document;
 
 @Schema()
 export class Settings {
-  @Prop({ type: Number, required: true })
-  _id: number;
+  @Prop({ type: String, ref: Admin.name, required: true })
+  owner: string;
 
   @Prop({ type: Number, enum: [1, 2], default: 1 }) // 1 = active, 2 = inactive
   isWorking: number;
@@ -29,6 +30,20 @@ export class Settings {
 
   @Prop({ type: String })
   email: string;
+
+  @Prop({ type: String })
+  website: string;
+
+  @Prop({ type: {
+    cbu: Number,
+    manual: Number,
+    selected: { type: String, enum: ['cbu', 'manual'], default: 'cbu'}
+  } })
+  currencyRate: {
+    cbu: number;
+    manual: number;
+    selected: string;
+  };
 
   @Prop({ type: Object })
   address: {

@@ -14,7 +14,7 @@ export class SettingsController {
     return this.settingsService.get();
   }
 
-  @Roles(Role.ADMIN, Role.USER)
+  @Roles(Role.ADMIN, Role.SUPERADMIN)
   @UseGuards(AuthGuard)
   @Put()
   async update(@Body() updateSettingDto: UpdateSettingDto) {

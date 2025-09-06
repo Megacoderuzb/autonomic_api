@@ -7,7 +7,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Admin, AdminDocument } from 'src/schemas/Admin.schema';
 import { CreateAdminDto } from './dto/create-admin.dto';
-import { UpdateAdminDto } from './dto/update-admin.dto';
+import { AddPaymentDto, UpdateAdminDto } from './dto/update-admin.dto';
 import { comparePassword, hashPassword } from 'src/common/utils/password.util';
 import { JwtService } from '@nestjs/jwt';
 import { Role } from 'src/common/enums/role.enum';
@@ -21,7 +21,7 @@ export class AdminsService {
     @InjectModel(Admin.name)
     private readonly adminModel: Model<AdminDocument>,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async getAll(query: CustomQuery) {
     const data = await paginate(this.adminModel, query);
@@ -35,7 +35,7 @@ export class AdminsService {
       throw new BadRequestException('Admin not found');
     }
 
-    if (data.isDeleted) {
+    if (data.deleted) {
       throw new BadRequestException('Admin is deleted');
     }
 
@@ -51,8 +51,8 @@ export class AdminsService {
     };
   }
 
-  async login(login: string, password: string) {
-    const admin = await this.adminModel.findOne({ login });
+  async login(username: string, password: string) {
+    const admin = await this.adminModel.findOne({ username });
     if (!admin) {
       throw new Error('Admin not found');
     }
@@ -61,21 +61,28 @@ export class AdminsService {
       throw new Error('Password is incorrect');
     }
 
-    if (admin.isDeleted) {
+    if (admin.deleted) {
       throw new Error('Admin is deleted');
     }
-
-    const token = await this.jwtService.signAsync({
-      id: admin._id,
-      role: Role.ADMIN,
-    });
-
-    return {
-      data: {
-        token,
-        ...admin.toJSON(),
-      },
-    };
+    const payment = admin.payment;
+    const isValid = payment && payment.dueDate && payment.dueDate > Date.now();
+    if (isValid) {
+      
+      const token = await this.jwtService.signAsync({
+        id: admin._id,
+        role: admin.role,
+      });
+      return {
+        data: {
+          token,
+          ...admin.toJSON(),
+        },
+      };
+    }
+    
+    throw new BadRequestException({
+      message: "Your Payment has been expired!!!"
+    })
   }
 
   async update(id: number, updateAdminDto: UpdateAdminDto) {
@@ -98,13 +105,48 @@ export class AdminsService {
     return { data: updatedAdmin };
   }
 
+    async payment(id: number, updateAdminDto: AddPaymentDto) {
+
+      const existingAdmin = await this.adminModel.findById(id);
+      if (!existingAdmin) {
+        throw new NotFoundException('Admin not found');
+      }
+    
+    const updatedAdmin = await this.adminModel.findByIdAndUpdate(
+      id,
+      updateAdminDto,
+      {
+        new: true,
+      },
+    );
+    return { data: updatedAdmin };
+  }
+
+
+  async verifyPayment(id: string) {
+    const admin = await this.adminModel.findById(id);
+    if (!admin) {
+      throw new BadRequestException('Admin not found');
+    }
+    if (admin.deleted) {
+      throw new BadRequestException('Admin is deleted');
+    }
+    const payment = admin.payment;
+    const isValid = payment && payment.dueDate && payment.dueDate > Date.now();
+    return {
+      adminId: admin._id,
+      paymentValid: isValid,
+      dueDate: payment?.dueDate || null,
+    };
+  }
+
   async resetPassword(id: number, resetPasswordDto: ResetPasswordDto) {
     const admin = await this.adminModel.findById(id);
     if (!admin) {
       throw new BadRequestException('Admin not found');
     }
 
-    if (admin.isDeleted) {
+    if (admin.deleted) {
       throw new BadRequestException('Admin is deleted');
     }
 
@@ -137,7 +179,7 @@ export class AdminsService {
     return {
       data: await this.adminModel.findByIdAndUpdate(
         id,
-        { isDeleted: true, deletedAt: Date.now() },
+        { deleted: true, deletedAt: Date.now() },
         { new: true },
       ),
     };

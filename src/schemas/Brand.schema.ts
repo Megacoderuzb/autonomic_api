@@ -2,15 +2,19 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { filterPlugin } from 'src/common/plugins/filter.plugin';
 import { timestampsPlugin } from 'src/common/plugins/timestamps.plugin';
+import { Admin } from './Admin.schema';
 
 export type BrandDocument = Brand & Document;
 
-@Schema()
+@Schema({
+  timestamps: true,
+  versionKey: false
+})
 export class Brand {
-  @Prop({ type: Number, required: true })
-  _id: number;
+  @Prop({ type: String, ref: Admin.name, required: true })
+  owner: string;
 
-  @Prop({ type: String , required: true, unique: true })
+  @Prop({ type: String, required: true, unique: true })
   name: string;
 
   @Prop({ type: Boolean, default: false })

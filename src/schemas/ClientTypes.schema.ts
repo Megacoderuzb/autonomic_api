@@ -1,32 +1,25 @@
-import { Document, Types } from 'mongoose';
+import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { timestampsPlugin } from 'src/common/plugins/timestamps.plugin';
 import { AutoIncrement } from 'src/common/plugins/autoIncrement.plugin';
 import { filterPlugin } from 'src/common/plugins/filter.plugin';
 import { Admin } from './Admin.schema';
-import { ClientTypes } from './ClientTypes.schema';
 
-export type ClientDocument = Client & Document;
+export type ClientTypesDocument = ClientTypes & Document;
 
 @Schema({
   versionKey: false,
   timestamps: true,
 })
-export class Client {
-  @Prop({ type: String })
-  firstName: string;
-
-  @Prop({ type: String })
-  lastName: string;
-
-  @Prop({ type: Types.ObjectId, ref: Admin.name, required: true })
+export class ClientTypes {
+  @Prop({ type: String, ref: Admin.name, required: true })
   owner: string;
 
-  @Prop({ type: Number, required: true })
-  phoneNumber: number;
+  @Prop({ type: String, required: true })
+  typeUz: string;
 
-  @Prop({ type: Types.ObjectId, ref: ClientTypes.name })
-  type: string;
+  @Prop({ type: String, required: true })
+  typeRu: string;
 
   @Prop({ type: Number, default: Date.now })
   updatedAt: number;
@@ -41,8 +34,8 @@ export class Client {
   deletedAt: number;
 }
 
-const ClientSchema = SchemaFactory.createForClass(Client);
+const ClientTypesSchema = SchemaFactory.createForClass(ClientTypes);
 
-ClientSchema.plugin(filterPlugin);
+ClientTypesSchema.plugin(filterPlugin);
 
-export { ClientSchema };
+export { ClientTypesSchema };

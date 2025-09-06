@@ -2,16 +2,22 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { filterPlugin } from 'src/common/plugins/filter.plugin';
 import { timestampsPlugin } from 'src/common/plugins/timestamps.plugin';
+import { Admin } from './Admin.schema';
 
 export type CategoryDocument = Category & Document;
 
-@Schema()
+@Schema({
+  versionKey: false
+})
 export class Category {
-  @Prop({ type: Number, required: true })
-  _id: number;
+  @Prop({ type: String, ref: Admin.name, required: true })
+  owner: string;
 
   @Prop({ type: String , required: true, unique: true })
-  name: string;
+  nameUz: string;
+
+  @Prop({ type: String , required: true, unique: true })
+  nameRu: string;
 
   @Prop({ type: Boolean, default: false })
   deleted: boolean;

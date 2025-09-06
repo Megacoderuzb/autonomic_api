@@ -3,6 +3,7 @@ import { Document } from 'mongoose';
 import { AutoIncrement } from 'src/common/plugins/autoIncrement.plugin';
 import { filterPlugin } from 'src/common/plugins/filter.plugin';
 import { timestampsPlugin } from 'src/common/plugins/timestamps.plugin';
+import { Admin } from './Admin.schema';
 
 export type ColorDocument = Color & Document;
 
@@ -10,8 +11,8 @@ export type ColorDocument = Color & Document;
   timestamps: true,
 })
 export class Color {
-  @Prop({ type: Number, required: true })
-  _id: number;
+  @Prop({ type: String, ref: Admin.name, required: true })
+  owner: string;
 
   @Prop({ type: String , required: true, unique: true })
   name: string;

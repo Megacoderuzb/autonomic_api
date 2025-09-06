@@ -2,17 +2,18 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { filterPlugin } from 'src/common/plugins/filter.plugin';
 import { timestampsPlugin } from 'src/common/plugins/timestamps.plugin';
+import { Admin } from './Admin.schema';
 
 export type ModelsDocument = Models & Document;
 
 @Schema()
 export class Models {
-  @Prop({ type: Number, required: true })
-  _id: number;
-
   @Prop({ type: String , required: true, unique: true })
   name: string;
 
+  @Prop({ type: String, ref: Admin.name, required: true })
+  owner: string;
+  
   @Prop({ type: Boolean, default: false })
   deleted: boolean;
 

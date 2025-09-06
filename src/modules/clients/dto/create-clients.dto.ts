@@ -1,6 +1,6 @@
 import { IsOptional, IsString } from 'class-validator';
 
-export class CreateAdminDto {
+export class CreateClientsDto {
   @IsString()
   firstName: string;
 
@@ -9,13 +9,7 @@ export class CreateAdminDto {
 
   @IsString()
   @IsOptional()
-  username: string;
-
-  @IsString()
-  email: string;
-
-  @IsString()
-  password: string;
+  owner: string;
 
   @IsString()
   @IsOptional()
@@ -23,6 +17,6 @@ export class CreateAdminDto {
 
   @IsString()
   @IsOptional()
-  role: string;  
+  type: string;
 
 }

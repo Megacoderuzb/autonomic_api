@@ -18,7 +18,7 @@ import { AuthGuard } from 'src/common/guards/auth.guards';
 export class FilesController {
   constructor(private readonly filesService: FilesService) {}
 
-  @Roles(Role.ADMIN, Role.USER)
+  @Roles(Role.ADMIN, Role.SUPERADMIN)
   @UseGuards(AuthGuard)
   @Post('upload')
   @UseInterceptors(FileInterceptor('file', multerConfig))

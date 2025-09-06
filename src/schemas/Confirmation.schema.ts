@@ -31,7 +31,7 @@ export class Confirmation {
   createdAt: number;
 
   @Prop({ type: Boolean, default: false })
-  isDeleted: boolean;
+  deleted: boolean;
 
   @Prop({ type: Number, required: false })
   deletedAt: number;
