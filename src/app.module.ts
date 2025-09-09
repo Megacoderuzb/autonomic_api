@@ -22,6 +22,7 @@ import { ClientsModule } from './modules/clients/clients.module';
 import { ClientTypesModule } from './modules/client-types/client-types.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ProductsModule } from './modules/products/products.module';
+import { CreditTypesModule } from './modules/credit-types/credit-types.module';
 
 
 
@@ -59,6 +60,7 @@ import { ProductsModule } from './modules/products/products.module';
     ClientTypesModule,
     CategoryModule,
     ProductsModule,
+    CreditTypesModule,
   ],
   controllers: [],
   providers: [

@@ -6,52 +6,39 @@ import { Brand } from './Brand.schema';
 import { Color } from './Color.schema';
 import { Admin } from './Admin.schema';
 import { Category } from './Category.schema';
+import { Client } from './Client.schema';
+import { CreditTypes } from './CreditTypes.schema';
 
-export type ProductsDocument = Products & Document;
+export type SalesDocument = Sales & Document;
 
 @Schema({
   timestamps: true,
   versionKey: false,
 })
-export class Products {
+export class Sales {
   @Prop({ type: String, ref: Admin.name, required: true })
   owner: string;
 
-  @Prop({ type: String , ref: Brand.name, required: true })
-  brand: string;
+  @Prop({ type: [{
+    product: { type: String, ref: Model.name, required: true},
+    quantity: { type: Number, required: true, default: 1 }
+  }] })
+  products: string;
 
-  @Prop({ type: String , ref: Model.name, required: true })
-  model: string;
+  @Prop({ type: String , ref: Client.name, required: true })
+  client: string;
 
-  @Prop({ type: String , ref: Color.name, required: true })
-  color: string;
+  @Prop({ type: String , ref: CreditTypes.name })
+  debtType: string;
 
   @Prop({ type: String , ref: Category.name, required: true })
   category: string;
 
-  @Prop({ type: Boolean, default: false })
-  imei: boolean;
-
-  @Prop({ type: String , required: true })
-  storage: string;
-
-  @Prop({ type: String  })
-  problem: string;
-
-  @Prop({ type: String  })
-  region: string;
-
-  @Prop({ type: Number  })
-  originalPrice: number;
-
-  @Prop({ type: Number  })
-  salePrice: number;
+  @Prop({ type: Number})
+  total: number;
 
   @Prop({ type: String, enum: ['USD', 'UZS'], default: 'UZS' })
   currency: string;
-
-  @Prop({ type: String, enum: ['new', 'used'], default: 'new' })
-  condition: string;
 
   @Prop({ type: Boolean, default: false })
   deleted: boolean;
@@ -66,8 +53,8 @@ export class Products {
   updatedAt: number;
 }
 
-const ProductsSchema = SchemaFactory.createForClass(Products);
+const SalesSchema = SchemaFactory.createForClass(Sales);
 
-ProductsSchema.plugin(filterPlugin);
+SalesSchema.plugin(filterPlugin);
 
-export { ProductsSchema };
+export { SalesSchema };
