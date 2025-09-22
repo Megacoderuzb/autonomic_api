@@ -59,7 +59,7 @@ export class ModelsController {
 
   @Put(':id')
   async update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updateModelsDto: UpdateModelsDto,
   ) {
     return await this.modelsService.update(id, updateModelsDto);
@@ -68,7 +68,7 @@ export class ModelsController {
   @UseGuards(AuthGuard)
   @Roles(Role.SUPERADMIN, Role.ADMIN)
   @Delete(':id')
-  async remove(@Param('id') id: number, @Req() req: any) {
+  async remove(@Param('id') id: string, @Req() req: any) {
     return await this.modelsService.remove(id,req.user.id);
   }
 

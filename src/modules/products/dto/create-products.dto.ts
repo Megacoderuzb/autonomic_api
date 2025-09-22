@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateProductsDto {
   @IsString()
@@ -26,13 +26,16 @@ export class CreateProductsDto {
   @IsString()
   region: string;
 
-  @IsString()
-  originalPrice: string;
+  @IsNumber()
+  originalPrice: number;
 
-  @IsString()
-  salePrice: string;
+  @IsNumber()
+  salePrice: number;
 
   @IsString()
   condition: string;
+
+    @IsString()
+  currency: string;
 
 }

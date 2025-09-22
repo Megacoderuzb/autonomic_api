@@ -79,7 +79,7 @@ export class AdminsController {
 
   @Get(':id')
   async getbyid(
-    @Param('id') id: number,
+    @Param('id') id: string,
   ) {
     return await this.adminsService.getMe(id);
   }
@@ -88,7 +88,7 @@ export class AdminsController {
   @UseGuards(AuthGuard)
   @Put(':id')
   async update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() addPaymentDto: AddPaymentDto,
   ) {
     return await this.adminsService.payment(id, addPaymentDto);
@@ -98,7 +98,7 @@ export class AdminsController {
   @UseGuards(AuthGuard)
   @Roles(Role.SUPERADMIN)
   @Delete(':id')
-  async remove(@Param('id') id: number) {
+  async remove(@Param('id') id: string) {
     return await this.adminsService.remove(id);
   }
 

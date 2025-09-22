@@ -59,7 +59,7 @@ export class ColorController {
 
   @Put(':id')
   async update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updateColorDto: UpdateColorDto,
   ) {
     return await this.colorService.update(id, updateColorDto);
@@ -68,7 +68,7 @@ export class ColorController {
   @UseGuards(AuthGuard)
   @Roles(Role.SUPERADMIN, Role.ADMIN)
   @Delete(':id')
-  async remove(@Param('id') id: number, @Req() req: any) {
+  async remove(@Param('id') id: string, @Req() req: any) {
     return await this.colorService.remove(id,req.user.id);
   }
 

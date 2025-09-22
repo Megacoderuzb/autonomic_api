@@ -59,7 +59,7 @@ export class BrandController {
 
   @Put(':id')
   async update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updateBrandDto: UpdateBrandDto,
   ) {
     return await this.brandService.update(id, updateBrandDto);
@@ -68,7 +68,7 @@ export class BrandController {
   @UseGuards(AuthGuard)
   @Roles(Role.SUPERADMIN, Role.ADMIN)
   @Delete(':id')
-  async remove(@Param('id') id: number, @Req() req: any) {
+  async remove(@Param('id') id: string, @Req() req: any) {
     return await this.brandService.remove(id,req.user.id);
   }
 

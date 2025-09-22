@@ -49,7 +49,7 @@ export class ColorService {
   }
 
 
-  async update(id: number, updateColorDto: UpdateColorDto) {
+  async update(id: string, updateColorDto: UpdateColorDto) {
 
     const updatedColor = await this.colorModel.findByIdAndUpdate(
       id,
@@ -62,7 +62,7 @@ export class ColorService {
   }
 
  
-  async remove(id: number, user: string) {
+  async remove(id: string, user: string) {
     return {
       data: await this.colorModel.findOneAndUpdate(
         {_id: id, owner: user},

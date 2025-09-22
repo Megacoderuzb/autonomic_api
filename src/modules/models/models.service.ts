@@ -48,7 +48,7 @@ export class ModelsService {
   }
 
 
-  async update(id: number, updateModelsDto: UpdateModelsDto) {
+  async update(id: string, updateModelsDto: UpdateModelsDto) {
 
     const updatedModels = await this.modelsModel.findByIdAndUpdate(
       id,
@@ -61,7 +61,7 @@ export class ModelsService {
   }
 
  
-  async remove(id: number, user: string) {
+  async remove(id: string, user: string) {
     return {
       data: await this.modelsModel.findOneAndUpdate(
         {_id: id, owner: user},

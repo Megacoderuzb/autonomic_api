@@ -14,10 +14,12 @@ export class CreateCreditTypesDto {
   @IsNumber()
   minimal: number;
 
-    @IsNumber()
+  @IsNumber()
+  @IsOptional()
   minimalAmount: number;
 
   
   @IsString()
+  @IsOptional()
   currency: string;
 }

@@ -28,7 +28,7 @@ export class AdminsService {
     return data;
   }
 
-  async getMe(id: number) {
+  async getMe(id: string) {
     const data = await this.adminModel.findById(id);
 
     if (!data) {
@@ -56,6 +56,7 @@ export class AdminsService {
     if (!admin) {
       throw new Error('Admin not found');
     }
+    
     const isPasswordCorrect = await comparePassword(password, admin.password);
     if (!isPasswordCorrect) {
       throw new Error('Password is incorrect');
@@ -66,7 +67,7 @@ export class AdminsService {
     }
     const payment = admin.payment;
     const isValid = payment && payment.dueDate && payment.dueDate > Date.now();
-    if (isValid) {
+    if (!isValid) {
       
       const token = await this.jwtService.signAsync({
         id: admin._id,
@@ -85,7 +86,7 @@ export class AdminsService {
     })
   }
 
-  async update(id: number, updateAdminDto: UpdateAdminDto) {
+  async update(id: string, updateAdminDto: UpdateAdminDto) {
     if (updateAdminDto.password) {
       updateAdminDto.password = await hashPassword(updateAdminDto.password);
     } else {
@@ -105,7 +106,7 @@ export class AdminsService {
     return { data: updatedAdmin };
   }
 
-    async payment(id: number, updateAdminDto: AddPaymentDto) {
+    async payment(id: string, updateAdminDto: AddPaymentDto) {
 
       const existingAdmin = await this.adminModel.findById(id);
       if (!existingAdmin) {
@@ -140,7 +141,7 @@ export class AdminsService {
     };
   }
 
-  async resetPassword(id: number, resetPasswordDto: ResetPasswordDto) {
+  async resetPassword(id: string, resetPasswordDto: ResetPasswordDto) {
     const admin = await this.adminModel.findById(id);
     if (!admin) {
       throw new BadRequestException('Admin not found');
@@ -175,7 +176,7 @@ export class AdminsService {
     };
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return {
       data: await this.adminModel.findByIdAndUpdate(
         id,

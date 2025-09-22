@@ -51,7 +51,7 @@ export class BrandService {
   }
 
 
-  async update(id: number, updateBrandDto: UpdateBrandDto) {
+  async update(id: string, updateBrandDto: UpdateBrandDto) {
 
     const updatedBrand = await this.brandModel.findByIdAndUpdate(
       id,
@@ -64,7 +64,7 @@ export class BrandService {
   }
 
  
-  async remove(id: number, user: string) {
+  async remove(id: string, user: string) {
     return {
       data: await this.brandModel.findOneAndUpdate(
         {_id: id, owner: user},
