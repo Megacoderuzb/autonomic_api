@@ -37,12 +37,24 @@ export class Settings {
   @Prop({ type: {
     cbu: Number,
     manual: Number,
-    selected: { type: String, enum: ['cbu', 'manual'], default: 'cbu'}
+    selected: { type: String, enum: ['cbu', 'manual'], default: 'cbu'},
+    logs: [{
+      date: Number,
+      cbu: Number,
+      manual: Number,
+      selected: { type: String, enum: ['cbu', 'manual'], default: 'cbu'},
+    }]
   } })
   currencyRate: {
     cbu: number;
     manual: number;
     selected: string;
+    logs: {
+      date: number,
+      cbu: number,
+      manual: number,
+      selected: { type: string, enum: ['cbu', 'manual'], default: 'cbu'},
+    }[]
   };
 
   @Prop({ type: Object })

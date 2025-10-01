@@ -20,16 +20,16 @@ export class ProductService {
   ) {}
 
   async getAll(query: CustomQuery, req: any) {
+
     // only owner’s products
     query.filter = { owner: req.user.id };
 
     // populate type
     const paged = await paginate(this.productsModel, query, ['brand', "model","color", "category"]);
 
-    // lang from query or header; default 'uz'
     const lang =
-      (query?._l as string) ||
-      (req?.headers?._l as string) ||
+      (query?.lang as string) ||
+      (req?.headers?.lang as string) ||
       '';
 
     const rows = Array.isArray(paged.data) ? paged.data : [];
@@ -44,6 +44,7 @@ export class ProductService {
     return {
       data: transformed,
       _meta: paged._meta,
+      _link: paged._link
     };
   }
 
@@ -57,8 +58,8 @@ export class ProductService {
     if ((doc as any).deleted) throw new BadRequestException('Productss is deleted');
 
     const lang =
-      (query?._l as string) ||
-      (req?.headers?._l as string) ||
+      (query?.lang as string) ||
+      (req?.headers?.lang as string) ||
       '';
 
     const data = filterByLang(

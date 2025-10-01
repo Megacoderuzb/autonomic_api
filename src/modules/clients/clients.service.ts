@@ -28,8 +28,8 @@ export class ClientService {
 
     // lang from query or header; default 'uz'
     const lang =
-      (query?._l as string) ||
-      (req?.headers?._l as string) ||
+      (query?.lang as string) ||
+      (req?.headers?.lang as string) ||
       'uz';
 
     const rows = Array.isArray(paged.data) ? paged.data : [];
@@ -57,8 +57,8 @@ export class ClientService {
     if ((doc as any).deleted) throw new BadRequestException('Clients is deleted');
 
     const lang =
-      (query?._l as string) ||
-      (req?.headers?._l as string) ||
+      (query?.lang as string) ||
+      (req?.headers?.lang as string) ||
       'uz';
 
     const data = filterByLang(

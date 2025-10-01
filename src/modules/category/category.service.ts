@@ -29,7 +29,7 @@ export class CategoryService {
 
     const paged = await paginate(this.clientTypesModel, query);
 
-    const lang = query._l || '';
+    const lang = query.lang || '';
     const rows = Array.isArray(paged.data) ? paged.data : [];
 
     // filterByLang generik emas -> unknown orqali ikki bosqichli cast
@@ -58,7 +58,7 @@ export class CategoryService {
     if (!doc) throw new NotFoundException('Category not found');
     if ((doc as any).deleted) throw new BadRequestException('Category is deleted');
 
-    const lang = query._l || '';
+    const lang = query.lang || '';
 
     // filterByLang generik emas -> unknown orqali ikki bosqichli cast
     const data = filterByLang(doc as any, lang, ['name']) as unknown as Category;

@@ -25,8 +25,8 @@ export class CreditTypes {
   @Prop({ type: Number })
   minimalAmount: number;
 
-  @Prop({ type: String, enum: ['USD', 'UZS'], default: 'UZS' })
-  currency: string;
+  // @Prop({ type: String, enum: ['USD', 'UZS'], default: 'USD' })
+  // currency: string;
 
   @Prop({ type: Number, default: Date.now })
   updatedAt: number;

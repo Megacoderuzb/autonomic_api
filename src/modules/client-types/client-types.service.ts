@@ -29,7 +29,7 @@ export class ClientTypesService {
 
     const paged = await paginate(this.clientTypesModel, query);
 
-    const lang = query._l || '';
+    const lang = query.lang || '';
     const rows = Array.isArray(paged.data) ? paged.data : [];
 
     // filterByLang generik emas -> unknown orqali ikki bosqichli cast
@@ -58,7 +58,7 @@ export class ClientTypesService {
     if (!doc) throw new NotFoundException('ClientTypes not found');
     if ((doc as any).deleted) throw new BadRequestException('ClientTypes is deleted');
 
-    const lang = query._l || '';
+    const lang = query.lang || '';
 
     // filterByLang generik emas -> unknown orqali ikki bosqichli cast
     const data = filterByLang(doc as any, lang, ['type']) as unknown as ClientTypes;

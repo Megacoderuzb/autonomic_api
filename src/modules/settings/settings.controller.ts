@@ -9,15 +9,25 @@ import { AuthGuard } from 'src/common/guards/auth.guards';
 export class SettingsController {
   constructor(private readonly settingsService: SettingsService) {}
 
+  // GET /settings — agar currencyRate.cbu bo'sh bo'lsa, CBU’dan olib saqlab qaytaradi
   @Get()
   async get() {
     return this.settingsService.get();
   }
 
+  // PUT /settings — avval eski currencyRate ni logs ga push, keyin yangisini yozish
   @Roles(Role.ADMIN, Role.SUPERADMIN)
   @UseGuards(AuthGuard)
   @Put()
-  async update(@Body() updateSettingDto: UpdateSettingDto) {
-    return this.settingsService.update(updateSettingDto);
+  async update(@Body() dto: UpdateSettingDto) {
+    return this.settingsService.update(dto);
+  }
+
+  // Ixtiyoriy: qo'lda CBU ni yangilash
+  @Roles(Role.ADMIN, Role.SUPERADMIN)
+  @UseGuards(AuthGuard)
+  @Get('currency/refresh')
+  async refreshCbu() {
+    return this.settingsService.refreshCbuRate();
   }
 }

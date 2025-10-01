@@ -24,6 +24,7 @@ import { CategoryModule } from './modules/category/category.module';
 import { ProductsModule } from './modules/products/products.module';
 import { CreditTypesModule } from './modules/credit-types/credit-types.module';
 import { SalesModule } from './modules/sales/sales.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 
 
@@ -49,6 +50,7 @@ import { SalesModule } from './modules/sales/sales.module';
     // MongooseModule.forRoot(process.env.MONGODB_URI),
     MongooseModule.forRoot(process.env.MONGODB_URI || 'mongodb://localhost:27017/mydb'),
     MongooseModule.forFeature([{ name: Counter.name, schema: CounterSchema }]),
+    ScheduleModule.forRoot(), 
     TranslationsModule,
     FilesModule,
     SettingsModule,

@@ -40,8 +40,8 @@ export class Sales {
   @Prop({ type: String, enum: ['CASH', 'DEBT', 'CREDIT'], required: true })
   saleType: 'CASH' | 'DEBT' | 'CREDIT';
 
-  @Prop({ type: String, enum: ['USD', 'UZS'], default: 'UZS' })
-  currency: string;
+  // @Prop({ type: String, enum: ['USD', 'UZS'], default: 'USD' })
+  // currency: string;
 
   @Prop({ type: Number })
   debtDeadline: number;
@@ -52,30 +52,36 @@ export class Sales {
   @Prop([{
     method: { type: String, enum: ['CASH', 'CARD', 'SYSTEMS'] },
     amount: { type: Number },
-    currency: { type: String, enum: ['USD', 'UZS'], default: 'UZS' },
+    // currency: { type: String, enum: ['USD', 'UZS'], default: 'USD' },
+
     date: { type: Date, default: Date.now }
   }])
   payments: {
     method: string;
     amount: number;
-    currency: string;
+    // currency: string;
     date: Date;
   }[];
 
-  @Prop([{
-    month: { type: Number, required: true }, // 1, 2, 3, ...
-    dueDate: { type: Date, required: true },
-    amount: { type: Number, required: true },
-    currency: { type: String, enum: ['USD', 'UZS'], default: 'UZS' },
+  @Prop({type: {
+    month: { type: Number, required: false }, // 1, 2, 3, ...
+    dueDate: { type: Date, required: false },
+    // currency: { type: String, enum: ['USD', 'UZS'], default: 'USD' },
+    completed: { type: Number, default: 0 },
+    credited: { type: Number, default: 0 },
+    monthly: { type: Number, default: 0 },
     paid: { type: Number, default: 0 }
-  }])
+  }, _id: false , required: false})
   creditSchedule?: {
     month: number;
     dueDate: Date;
-    amount: number;
-    currency: string;
+    completed: number;
+    // currency: string;
+    monthly: number;
+    credited: number;
     paid: number;
-  }[];
+  };
+
 
   @Prop({ type: Boolean, default: false })
   isCompleted: boolean;

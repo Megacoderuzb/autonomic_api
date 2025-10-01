@@ -6,6 +6,7 @@ import { Brand } from './Brand.schema';
 import { Color } from './Color.schema';
 import { Admin } from './Admin.schema';
 import { Category } from './Category.schema';
+import { Models } from './Model.schema';
 
 export type ProductsDocument = Products & Document;
 
@@ -20,7 +21,7 @@ export class Products {
   @Prop({ type: String , ref: Brand.name, required: true })
   brand: string;
 
-  @Prop({ type: String , ref: Model.name, required: true })
+  @Prop({ type: String , ref: Models.name, required: true })
   model: string;
 
   @Prop({ type: String , ref: Color.name, required: true })
@@ -47,8 +48,8 @@ export class Products {
   @Prop({ type: Number  })
   salePrice: number;
 
-  @Prop({ type: String, enum: ['USD', 'UZS'], default: 'UZS' })
-  currency: string;
+  // @Prop({ type: String, enum: ['USD', 'UZS'], default: 'USD' })
+  // currency: string;
 
   @Prop({ type: String, enum: ['new', 'used'], default: 'new' })
   condition: string;

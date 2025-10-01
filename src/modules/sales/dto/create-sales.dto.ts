@@ -46,16 +46,21 @@ export class CreateSalesDto {
     date: Date;
   }[];
 
-    @IsArray()
+  @IsObject()
   @IsOptional()
   creditSchedule: {
     month: number;
     dueDate: Date;
-    amount: number;
     currency: string;
+    credited: number;
+    monthly: number;
+    completed: number;
     paid:  number;
-  }[];
-
+  };
+  @IsString()
+  @IsOptional()
+  creditType: string;
+  
   @IsBoolean()
   @IsOptional()
   isCompleted: boolean;

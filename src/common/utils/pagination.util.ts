@@ -121,7 +121,7 @@ export async function paginate(
         totalCount,
         totalPages,
       },
-      _links: {
+      _link: {
         self: buildUrl(baseUrl, isAll ? 1 : page, perPage, filter, isAll),
         first: buildUrl(baseUrl, 1, perPage, filter, isAll),
         prev:

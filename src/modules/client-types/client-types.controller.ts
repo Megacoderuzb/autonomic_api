@@ -28,7 +28,7 @@ export class ClientTypesController {
   @Get()
   async getAll(@Query() query: CustomQuery, @Req() req: any) {
     query.baseUrl = `${process.env.SITE_URL}${req.path}`;
-    query._l = req.headers._l;
+    query.lang = req.headers.lang;
     return await this.clientTypesService.getAll(query, req);
   }
 
@@ -38,7 +38,7 @@ export class ClientTypesController {
   @Get(':id')
   async getbyId(@Param("id") id: string,@Query() query: CustomQuery,@Req() req: any) {
     query.baseUrl = `${process.env.SITE_URL}${req.path}`;
-    query._l = req.headers._l;
+    query.lang = req.headers.lang;
     return await this.clientTypesService.getById(id, query, req);
   }
 

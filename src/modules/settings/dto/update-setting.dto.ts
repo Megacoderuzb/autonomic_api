@@ -1,4 +1,4 @@
-import { IsEnum, IsNumber, IsObject, IsString } from 'class-validator';
+import { IsEnum, IsNumber, IsObject, IsOptional, IsString } from 'class-validator';
 
 export class UpdateSettingDto {
   @IsNumber()
@@ -22,6 +22,20 @@ export class UpdateSettingDto {
 
   @IsString()
   email: string;
+
+  @IsObject()
+  @IsOptional()
+  currencyRate: {
+    cbu: number;
+    manual: number;
+    selected: string;
+    logs: {
+      date: number,
+      cbu: number,
+      manual: number,
+      selected: { type: string, enum: ['cbu', 'manual'], default: 'cbu'},
+    }[]
+  };
 
   @IsObject()
   address: {
